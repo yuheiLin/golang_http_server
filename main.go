@@ -78,8 +78,14 @@ func handle2(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	// get envs
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "10000" // Default to 10000 if PORT env var is not set
+	}
+
 	http.HandleFunc("/h1", handler1)
 	http.HandleFunc("/h2", handle2)
-	log.Println("Server starting on 8080...")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Println("Server starting on port", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
